@@ -18,7 +18,13 @@
     "/test/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.2.0"
+    "polymer": "Polymer/polymer#^1.2.0",
+    "dialog-el": "jshcrowthe/dialog-el",
+    "fs-styles": "liechtym/fs-styles#full-styles-component",
+    "iron-ajax": "^1.4.3",
+    "wc-i18n": "jshcrowthe/wc-i18n#^1.1.0",
+    "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior",
+    "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

@@ -9,6 +9,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../dialog-el/dialog-el.html">
+<link rel="import" href="../fs-styles/fs-styles-full.html">
+<link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
+<link rel="import" href="../wc-i18n/wc-i18n.html">
+<link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
 
 <!--
 An element providing a solution to no problem in particular.
@@ -28,124 +35,170 @@ Example:
 -->
 
 <dom-module id="birch-message">
-  <template>
+    <style include='fs-styles'></style>
     <style>
-      :host {
-        display: block;
-        box-sizing: border-box;
+      #innerDialog {
+        height: 540px;
+        width: 450px;
       }
-
-      .author img {
-        display: block;
-        float: left;
-        margin-right: 5px;
-        max-height: 100px;
-        max-width: 100px;
+      #to-section {
+        margin: 27px 0 20px;
+      }
+      #to-section p {
+        width: 70px;
+        display: inline-block;
+      }
+      #about-section {
+        border-top: 1px solid #cccccc;
+        border-bottom: 1px solid #cccccc;
+        padding-top: 12px;
+        padding-bottom: 20px;
+      }
+      #subject-section {
+        border-bottom: 1px solid #cccccc;
+        padding: 14px 0;
+      }
+      #message-section {
+        padding: 14px 0;
+      }
+      #message-section #textarea {
+        min-height: 130px;
+        max-height: 200px;
+      }
+      #message-section .char-count {
+        text-align: right;
+      }
+      #footer-buttons {
+        position: absolute;
+        bottom: 16px;
       }
     </style>
 
-    <h1>&lt;birch-message&gt;</h1>
-    <content></content>
-    <p class="author">
-      <img src$="{{author.image}}">
-      Cheers,<br/>
-      <span class="name">{{author.name}}</span>
-    </p>
+  <template>
+    <iron-ajax id="sendReq"
+      url="[[ajaxBase]]/fst/mailbox/u2ms/api/v1/threads"
+      headers='[[authHeaders]]'
+      method='POST'
+      content-type="application/json"
+      handle-as="json"
+      body='[[_body]]'
+      on-response="_handleResponse"></iron-ajax>
+    <dialog-el id="dialogBox" modal>
+      <div id="innerDialog">
+        <h4>New Message</h4>
+        <div id="to-section">
+          <p>To</p>
+          <span>[[contactName]]</span>
+        </div>
+        <div id="about-section">
+          <p>About</p>
+          <div>[[_documentTitle]]</div>
+          <div>[[_pageURL]]</div>
+        </div>
+        <div id="subject-section">
+          <label for="text">Subject</label>
+          <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder="Write a Subject"/>
+        </div>
+        <div id="message-section">
+          <label for="textarea">Message</label>
+          <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder="Write a Message" on-keyup="_countChar"></textarea>
+          <p class="char-count">[[_charactersLeft]]</p>
+        </div>
+        <div id="footer-buttons">
+          <button id="sendButton" type="button" class$="fs-button fs-button--recommended[[_buttonLoading(_requestPending)]]" on-tap="_postMessage" disabled>Send</button>
+          <button type="button" class="fs-button fs-button--minor" on-tap="close">Cancel</button>
+        </div>
+      </div>
+    </dialog-el>
+
   </template>
 
   <script>
     Polymer({
       is: 'birch-message',
 
+        behaviors: [
+          OakAJAXBehavior,
+          OakI18nBehavior,
+          WCI18nBehavior
+        ],
+
       properties: {
         /**
          * `fancy` indicates that the element should don a monocle and tophat,
          * while checking its pocket watch.
          */
-        fancy: Boolean,
-
-        /**
-         * Describes the author of the element, but is really just an excuse to
-         * show off JSDoc annotations.
-         *
-         * @type {{name: string, image: string}}
-         */
-        author: {
-          type: Object,
-          // Use `value` to provide a default value for a property, by setting it
-          // on your element's prototype.
-          //
-          // If you provide a function, as we do here, Polymer will call that
-          // _per element instance_.
-          //
-          // We do that to ensure that each element gets its own copy of the
-          // value, rather than having it shared across all instances (via the
-          // prototype).
-          value: function() {
-            return {
-              name:  'Dimitri Glazkov',
-              image: 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg',
-            };
-          }
+        contactName: {
+          type: String,
+          value: "Patron"
         },
+        toUserIds: {
+          type: Array
+        },
+        _body: {
+          type: Object
+        },
+        _charactersLeft: {
+          type: Number,
+          value: 10000
+        },
+        _documentTitle: {
+          type: String,
+          value: document.title
+        },
+        _pageURL: {
+          type: String,
+          value: location.href
+        },
+        _requestPending: {
+          type: Boolean,
+          value: false
+        }
       },
-
-      // Element Lifecycle
 
       ready: function() {
-        // `ready` is called after all elements have been configured, but
-        // propagates bottom-up. This element's children are ready, but parents
-        // are not.
-        //
-        // This is the point where you should make modifications to the DOM (when
-        // necessary), or kick off any processes the element wants to perform.
+        console.log('ready!')
       },
 
-      attached: function() {
-        // `attached` fires once the element and its parents have been inserted
-        // into a document.
-        //
-        // This is a good place to perform any work related to your element's
-        // visual state or active behavior (measuring sizes, beginning animations,
-        // loading resources, etc).
+      show: function() {
+        this.$.dialogBox.show();
       },
 
-      detached: function() {
-        // The analog to `attached`, `detached` fires when the element has been
-        // removed from a document.
-        //
-        // Use this to clean up anything you did in `attached`.
+      close: function() {
+        this.$.dialogBox.close();
       },
-
-      // Element Behavior
-
-      /**
-       * Sometimes it's just nice to say hi.
-       *
-       * @param {string} greeting A positive greeting.
-       * @return {string} The full greeting.
-       */
-      sayHello: function(greeting) {
-        var response = greeting || 'Hello World!';
-        return 'birch-message says, ' + response;
+      _buttonLoading: function(requestPending){
+        return requestPending ? ' fs-button--loading' : '';
       },
-
-      /**
-       * The `birch-message-lasers` event is fired whenever `fireLasers` is called.
-       *
-       * @event birch-message-lasers
-       * @detail {{sound: String}}
-       */
-
-      /**
-       * Attempt to destroy this element's enemies with a beam of light!
-       *
-       * Or, at least, dispatch an event in the vain hope that someone else will
-       * do the zapping.
-       */
-      fireLasers: function() {
-        this.fire('birch-message-lasers', {sound: 'Pew pew!'});
+      _checkContentFilled: function(){
+        this.debounce('content-filled-debouncer', function() {
+          this.$.sendButton.disabled = !(this.$.textarea.value.length > 0 && this.$.text.value.length > 0);
+        }, 300);
+      },
+      _countChar: function(e) {
+        this.debounce('count-debouncer', function(){
+          this._charactersLeft = 10000 - e.target.value.length;
+        }, 300);
+        this._checkContentFilled(); 
+      },
+      _createBody: function() {
+        this._body = {
+          about: this._documentTitle,
+          aboutUrl: this._pageURL,
+          body: this.$.textarea.value,
+          subject: this.$.text.value,
+          toUserIds: this.toUserIds
+        }
+      },
+      _handleResponse: function(e) {
+        debugger;
+      },
+      _postMessage: function() {
+        this._requestPending = true;
+        this._createBody()
+        this.$.sendReq.generateRequest();
       }
+
     });
   </script>
 </dom-module>

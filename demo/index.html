@@ -20,26 +20,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <p>An example of <code>&lt;birch-message&gt;</code>:</p>
 
-    <p>Make words! <button id="saybtn">Say Something</button></p>
-    <p>Make lasers! <button id="laserbtn">Fire lasers</button></p>
-
-    <birch-message author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
-      <h2>Hello birch-message</h2>
-    </birch-message>
-
+    <button id="dialog-popup">Trigger Message Dialog</button>
+    <birch-message></birch-message>
     <script>
+      var toUserIds = ["cis.user.MMMS-LR4F"];
       var seedElement = document.querySelector('birch-message');
+      seedElement.toUserIds = toUserIds;
 
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
-
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
-
-      document.addEventListener("birch-message-lasers", function(e) {
-        console.log(e.detail.sound);
+      var button = document.querySelector('#dialog-popup');
+      button.addEventListener('click', function(e){
+        seedElement.show();
       });
 
     </script>
