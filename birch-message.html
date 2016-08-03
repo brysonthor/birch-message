@@ -10,7 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../dialog-el/dialog-el.html">
-<link rel="import" href="../fs-styles/fs-styles-full.html">
+<link rel="import" href="../fs-button/fs-button.html">
+<link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
@@ -77,11 +78,11 @@ Example:
   <template>
     <iron-ajax id="sendReq"
       url="[[ajaxBase]]/fst/mailbox/u2ms/api/v1/threads"
-      headers='[[authHeaders]]'
-      method='POST'
+      headers="[[authHeaders]]"
+      method="POST"
       content-type="application/json"
       handle-as="json"
-      body='[[_body]]'
+      body="[[_body]]"
       on-response="_handleResponse"></iron-ajax>
     <dialog-el id="dialogBox" modal>
       <div id="innerDialog">
@@ -105,8 +106,8 @@ Example:
           <p class="char-count">[[_charactersLeft]]</p>
         </div>
         <div id="footer-buttons">
-          <button id="sendButton" type="button" class$="fs-button fs-button--recommended[[_buttonLoading(_requestPending)]]" on-tap="_postMessage" disabled>Send</button>
-          <button type="button" class="fs-button fs-button--minor" on-tap="close">Cancel</button>
+          <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled>Send</button>
+          <button is='fs-button' type="button" option="minor" on-tap="close">Cancel</button>
         </div>
       </div>
     </dialog-el>
@@ -149,10 +150,6 @@ Example:
         _pageURL: {
           type: String,
           value: location.href
-        },
-        _requestPending: {
-          type: Boolean,
-          value: false
         }
       },
 
@@ -166,9 +163,6 @@ Example:
 
       close: function() {
         this.$.dialogBox.close();
-      },
-      _buttonLoading: function(requestPending){
-        return requestPending ? ' fs-button--loading' : '';
       },
       _checkContentFilled: function(){
         this.debounce('content-filled-debouncer', function() {
@@ -194,7 +188,8 @@ Example:
         debugger;
       },
       _postMessage: function() {
-        this._requestPending = true;
+        this.$.sendButton.loading = true;
+        this.$.sendButton.disabled = true;
         this._createBody()
         this.$.sendReq.generateRequest();
       }

@@ -20,7 +20,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
     "dialog-el": "jshcrowthe/dialog-el",
-    "fs-styles": "liechtym/fs-styles#full-styles-component",
+    "fs-button": "liechtym/fs-button",
+    "fs-styles": "fs-webdev/fs-styles",
     "iron-ajax": "^1.4.3",
     "wc-i18n": "jshcrowthe/wc-i18n#^1.1.0",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior",
@@ -29,5 +30,8 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "^4.0.0"
+  },
+  "resolutions": {
+    "polymer": "^1.2.0"
   }
 }
