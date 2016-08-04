@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../dialog-el/dialog-el.html">
+<link rel="import" href="../cedar-dialog/cedar-dialog.html">
 <link rel="import" href="../fs-button/fs-button.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
@@ -38,10 +38,6 @@ Example:
 <dom-module id="birch-message">
     <style include='fs-styles'></style>
     <style>
-      #innerDialog {
-        height: 540px;
-        width: 450px;
-      }
       #to-section {
         margin: 27px 0 20px;
       }
@@ -69,10 +65,6 @@ Example:
       #message-section .char-count {
         text-align: right;
       }
-      #footer-buttons {
-        position: absolute;
-        bottom: 16px;
-      }
     </style>
 
   <template>
@@ -84,33 +76,34 @@ Example:
       handle-as="json"
       body="[[_body]]"
       on-response="_handleResponse"></iron-ajax>
-    <dialog-el id="dialogBox" modal>
-      <div id="innerDialog">
-        <h4>New Message</h4>
-        <div id="to-section">
-          <p>To</p>
-          <span>[[contactName]]</span>
+    <cedar-dialog id="dialogBox" modal>
+        <h4 header>New Message</h4>
+        <div id="innerDialog" content>
+          <div id="to-section">
+            <p>To</p>
+            <span>[[contactName]]</span>
+          </div>
+          <div id="about-section">
+            <p>About</p>
+            <div>[[_documentTitle]]</div>
+            <div>[[_pageURL]]</div>
+          </div>
+          <div id="subject-section">
+            <label for="text">Subject</label>
+            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder="Write a Subject"/>
+          </div>
+          <div id="message-section">
+            <label for="textarea">Message</label>
+            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder="Write a Message" on-keyup="_countChar"></textarea>
+            <p class="char-count">[[_charactersLeft]]</p>
+          </div>
         </div>
-        <div id="about-section">
-          <p>About</p>
-          <div>[[_documentTitle]]</div>
-          <div>[[_pageURL]]</div>
-        </div>
-        <div id="subject-section">
-          <label for="text">Subject</label>
-          <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder="Write a Subject"/>
-        </div>
-        <div id="message-section">
-          <label for="textarea">Message</label>
-          <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder="Write a Message" on-keyup="_countChar"></textarea>
-          <p class="char-count">[[_charactersLeft]]</p>
-        </div>
-        <div id="footer-buttons">
+        <div id="footer-buttons" footer>
           <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled>Send</button>
           <button is='fs-button' type="button" option="minor" on-tap="close">Cancel</button>
         </div>
       </div>
-    </dialog-el>
+    </cedar-dialog>
 
   </template>
 
@@ -158,7 +151,7 @@ Example:
       },
 
       show: function() {
-        this.$.dialogBox.show();
+        this.$.dialogBox.open();
       },
 
       close: function() {

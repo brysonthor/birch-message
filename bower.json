@@ -18,9 +18,9 @@
     "/test/"
   ],
   "dependencies": {
+    "cedar-dialog": "FamilySearchElements/cedar-dialog",
     "polymer": "Polymer/polymer#^1.2.0",
-    "dialog-el": "jshcrowthe/dialog-el",
-    "fs-button": "liechtym/fs-button",
+    "fs-button": "jshcrowthe/fs-button",
     "fs-styles": "fs-webdev/fs-styles",
     "iron-ajax": "^1.4.3",
     "wc-i18n": "jshcrowthe/wc-i18n#^1.1.0",
