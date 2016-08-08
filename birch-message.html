@@ -65,6 +65,12 @@ Example:
       #message-section .char-count {
         text-align: right;
       }
+
+      .paper-dia:after {
+          border-left-color: #FFF;
+          border-right-width: 0;
+          left: -17px;
+      }
     </style>
 
   <template>
@@ -150,7 +156,7 @@ Example:
         console.log('ready!')
       },
 
-      show: function() {
+      open: function() {
         this.$.dialogBox.open();
       },
 
