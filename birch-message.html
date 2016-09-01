@@ -184,7 +184,7 @@ Example:
         }
       },
       _handleResponse: function(e) {
-        debugger;
+        if (e.detail.status < 400) this.$.dialogBox.close();
       },
       _postMessage: function() {
         this.$.sendButton.loading = true;
