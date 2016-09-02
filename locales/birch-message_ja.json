@@ -1,13 +1,13 @@
 {
-	"send": "send",
-	"cancel": "Cancel",
-	"remove": "Remove",
-	"undo": "Undo",
-	"message": "Message",
-	"new_message": "New Message",
-	"to": "To",
-	"subject": "Subject",
-	"error": "Sorry, there was a problem communicating with the server. Please try again later or contact technical support if the problem persists. We apologize for any inconvenience.",
-	"write_message": "Write a Message",
-	"write_subject": "Write a Subject"
+	"send": "送信",
+	"cancel": "キャンセル",
+	"remove": "削除",
+	"undo": "元に戻す",
+	"message": "メッセージ",
+	"new_message": "新しいメッセージ",
+	"to": "受信者：",
+	"subject": "件名",
+	"error": "申し訳ありません。サーバーとのコミュニケーションに問題がありました。 問題が解決されない場合，あとで再試行するか，技術サポートに連絡してください。 ご迷惑をおかけして申し訳ありません。",
+	"write_message": "メッセージを入力してください",
+	"write_subject": "件名を入力してください"
 }

@@ -1,13 +1,13 @@
 {
-	"send": "send",
-	"cancel": "Cancel",
-	"remove": "Remove",
-	"undo": "Undo",
-	"message": "Message",
-	"new_message": "New Message",
-	"to": "To",
-	"subject": "Subject",
-	"error": "Sorry, there was a problem communicating with the server. Please try again later or contact technical support if the problem persists. We apologize for any inconvenience.",
-	"write_message": "Write a Message",
-	"write_subject": "Write a Subject"
+	"send": "傳送",
+	"cancel": "取消",
+	"remove": "移除",
+	"undo": "復原",
+	"message": "信息",
+	"new_message": "新信息",
+	"to": "致",
+	"subject": "主旨",
+	"error": "很抱歉，與伺服器通訊時發生問題。 請稍後再試，如果問題仍然存在請聯絡技術支援。 很抱歉造成你的不便。",
+	"write_message": "填寫信息",
+	"write_subject": "填寫主旨"
 }

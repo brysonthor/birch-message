@@ -1,13 +1,13 @@
 {
-	"send": "send",
-	"cancel": "Cancel",
-	"remove": "Remove",
-	"undo": "Undo",
-	"message": "Message",
-	"new_message": "New Message",
-	"to": "To",
-	"subject": "Subject",
-	"error": "Sorry, there was a problem communicating with the server. Please try again later or contact technical support if the problem persists. We apologize for any inconvenience.",
-	"write_message": "Write a Message",
-	"write_subject": "Write a Subject"
+	"send": "Отправить",
+	"cancel": "Отменить",
+	"remove": "Удалить",
+	"undo": "Отменить",
+	"message": "Сообщение",
+	"new_message": "Новое сообщение ",
+	"to": "Кому",
+	"subject": "Тема",
+	"error": "Извините, произошла ошибка при подключении к серверу. Попробуйте еще раз позднее или если ошибка повторяется, обратитесь в службу технической поддержки. Приносим извинения за неудобство.",
+	"write_message": "Напишите сообщение",
+	"write_subject": "Напишите тему"
 }

@@ -1,13 +1,13 @@
 {
-	"send": "send",
-	"cancel": "Cancel",
-	"remove": "Remove",
-	"undo": "Undo",
-	"message": "Message",
-	"new_message": "New Message",
-	"to": "To",
-	"subject": "Subject",
-	"error": "Sorry, there was a problem communicating with the server. Please try again later or contact technical support if the problem persists. We apologize for any inconvenience.",
-	"write_message": "Write a Message",
-	"write_subject": "Write a Subject"
+	"send": "Enviar",
+	"cancel": "Cancelar",
+	"remove": "Eliminar",
+	"undo": "Deshacer",
+	"message": "Mensaje",
+	"new_message": "Mensaje nuevo",
+	"to": "Para",
+	"subject": "Asunto",
+	"error": "Lo sentimos, se produjo un problema al comunicarse con el servidor. Por favor, inténtelo otra vez más tarde o si el problema persiste, póngase en contacto con el equipo de soporte técnico. Le pedimos disculpas por las molestias.",
+	"write_message": "Escriba un mensaje",
+	"write_subject": "Escriba el asunto"
 }

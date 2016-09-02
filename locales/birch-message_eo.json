@@ -1,13 +1,13 @@
 {
-	"send": "send",
-	"cancel": "Cancel",
-	"remove": "Remove",
-	"undo": "Undo",
-	"message": "Message",
-	"new_message": "New Message",
-	"to": "To",
-	"subject": "Subject",
-	"error": "Sorry, there was a problem communicating with the server. Please try again later or contact technical support if the problem persists. We apologize for any inconvenience.",
-	"write_message": "Write a Message",
-	"write_subject": "Write a Subject"
+	"send": "[Šéñð- П國カ내]",
+	"cancel": "[Çåñçéļ----- П國カ내]",
+	"remove": "[Ŕéɱöṽé----- П國カ내]",
+	"undo": "[Ûñðö- П國カ내]",
+	"message": "[Ṁéššåĝé------- П國カ내]",
+	"new_message": "[Ñéŵ Ṁéššåĝé---- П國カ내]",
+	"to": "[Ţö П]",
+	"subject": "[Šûƀĵéçţ------- П國カ내]",
+	"error": "[Šöŕŕý, ţĥéŕé ŵåš å þŕöƀļéɱ çöɱɱûñîçåţîñĝ ŵîţĥ ţĥé šéŕṽéŕ. Þļéåšé ţŕý åĝåîñ ļåţéŕ öŕ çöñţåçţ ţéçĥñîçåļ šûþþöŕţ îƒ ţĥé þŕöƀļéɱ þéŕšîšţš. Ŵé åþöļöĝîžé ƒöŕ åñý îñçöñṽéñîéñçé.-------------------------------------------- П國カ내]",
+	"write_message": "[Ŵŕîţé å Ṁéššåĝé-------- П國カ내]",
+	"write_subject": "[Ŵŕîţé å Šûƀĵéçţ-------- П國カ내]"
 }
