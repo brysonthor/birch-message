@@ -1,1 +1,13 @@
-{}
+{
+	"send": "send",
+	"cancel": "Cancel",
+	"remove": "Remove",
+	"undo": "Undo",
+	"message": "Message",
+	"new_message": "New Message",
+	"to": "To",
+	"subject": "Subject",
+	"error": "Sorry, there was a problem communicating with the server. Please try again later or contact technical support if the problem persists. We apologize for any inconvenience.",
+	"write_message": "Write a Message",
+	"write_subject": "Write a Subject"
+}
