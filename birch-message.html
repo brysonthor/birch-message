@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../cedar-alert/cedar-alert.html">
 
 
 <!--
@@ -38,6 +39,12 @@ Example:
 <dom-module id="birch-message">
     <style include='fs-styles'></style>
     <style>
+      :host {
+        --cedar-dialog: {
+          max-width: 500px !important;
+          max-height: 700px !important;
+        }
+      }
       #to-section {
         margin: 27px 0 20px;
       }
@@ -47,12 +54,33 @@ Example:
       }
       #about-section {
         border-top: 1px solid #cccccc;
-        border-bottom: 1px solid #cccccc;
         padding-top: 12px;
-        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+      #about-section p {
+        width: 70px;
+        vertical-align: top;
+        display: inline-block;
+      }
+      .about-data {
+        display: inline-block;
+        width: 330px;
+      }
+      .about-data div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 95%;
+      }
+      .remove-undo-about {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 9px;
+        cursor: pointer;
       }
       #subject-section {
         border-bottom: 1px solid #cccccc;
+        border-top: 1px solid #cccccc;
         padding: 14px 0;
       }
       #message-section {
@@ -66,14 +94,10 @@ Example:
         text-align: right;
       }
 
-      .paper-dia:after {
-          border-left-color: #FFF;
-          border-right-width: 0;
-          left: -17px;
-      }
     </style>
 
   <template>
+    <wc-i18n-src locale='[[lang]]' locale-dir='[[localeDir()]]' domain='birch-message'></wc-i18n-src>
     <iron-ajax id="sendReq"
       url="[[ajaxBase]]/fst/mailbox/u2ms/api/v1/threads"
       headers="[[authHeaders]]"
@@ -81,32 +105,43 @@ Example:
       content-type="application/json"
       handle-as="json"
       body="[[_body]]"
-      on-response="_handleResponse"></iron-ajax>
+      on-response="_handleResponse",
+      on-error="_handleError"></iron-ajax>
     <cedar-dialog id="dialogBox" modal>
-        <h4 header>New Message</h4>
+        <h4 header><wc-i18n key='birch-message.new_message'></wc-i18n></h4>
         <div id="innerDialog" content>
           <div id="to-section">
-            <p>To</p>
+            <p><wc-i18n key='birch-message.to'></wc-i18n></p>
             <span>[[contactName]]</span>
           </div>
           <div id="about-section">
             <p>About</p>
-            <div>[[_documentTitle]]</div>
-            <div>[[_pageURL]]</div>
+            <div class="about-data">
+              <div hidden="[[_hideAboutDetails]]">[[_documentTitle]]</div>
+              <div hidden="[[_hideAboutDetails]]">[[_pageURL]]</div>
+            </div>
+            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleRemove" hidden="[[_hideAboutDetails]]"><wc-i18n key='birch-message.remove'></wc-i18n></a>
+            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleUndo" hidden="[[!_hideAboutDetails]]"><wc-i18n key='birch-message.undo'></wc-i18n></a>
           </div>
           <div id="subject-section">
-            <label for="text">Subject</label>
-            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder="Write a Subject"/>
+            <label for="text"><wc-i18n key='birch-message.subject'></wc-i18n></label>
+            <wc-i18n key='birch-message.write_subject' provider value="{{writeSubject}}"></wc-i18n>
+            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder$="{{writeSubject}}"/>
           </div>
           <div id="message-section">
-            <label for="textarea">Message</label>
-            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder="Write a Message" on-keyup="_countChar"></textarea>
+            <label for="textarea"><wc-i18n key='birch-message.message'></wc-i18n></label>
+            <wc-i18n id="writeMessage" provider key='birch-message.write_message' value="{{writeMessage}}"></wc-i18n>
+            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder$="{{writeMessage}}" on-keyup="_countChar"></textarea>
             <p class="char-count">[[_charactersLeft]]</p>
+          </div>
+          <div id="error-section" hidden="[[!error]]">
+            <wc-i18n key='birch-message.error' provider value="{{errorMessage}}"></wc-i18n>
+            <cedar-alert alert-type="error">[[errorMessage]]</cedar-alert>
           </div>
         </div>
         <div id="footer-buttons" footer>
-          <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled>Send</button>
-          <button is='fs-button' type="button" option="minor" on-tap="close">Cancel</button>
+          <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled><wc-i18n key='birch-message.send'></wc-i18n></button>
+          <button is='fs-button' type="button" option="minor" on-tap="close"><wc-i18n key='birch-message.cancel'></wc-i18n></button>
         </div>
       </div>
     </cedar-dialog>
@@ -124,13 +159,13 @@ Example:
         ],
 
       properties: {
-        /**
-         * `fancy` indicates that the element should don a monocle and tophat,
-         * while checking its pocket watch.
-         */
         contactName: {
           type: String,
           value: "Patron"
+        },
+        error: {
+          type: Boolean,
+          value: false
         },
         toUserIds: {
           type: Array
@@ -146,6 +181,10 @@ Example:
           type: String,
           value: document.title
         },
+        _hideAboutDetails: {
+          type: Boolean,
+          value: false
+        },
         _pageURL: {
           type: String,
           value: location.href
@@ -153,7 +192,8 @@ Example:
       },
 
       ready: function() {
-        console.log('ready!')
+        this.$.writeMessage
+        debugger;
       },
 
       open: function() {
@@ -165,31 +205,57 @@ Example:
       },
       _checkContentFilled: function(){
         this.debounce('content-filled-debouncer', function() {
+          this.error = false;
           this.$.sendButton.disabled = !(this.$.textarea.value.length > 0 && this.$.text.value.length > 0);
         }, 300);
       },
+      _clearText: function() {
+        this.$.text.value = "";
+        this.$.textarea.value = "";
+      },
       _countChar: function(e) {
         this.debounce('count-debouncer', function(){
-          this._charactersLeft = 10000 - e.target.value.length;
+          this._charactersLeft = 10000 - this.$.textarea.value.length;
         }, 300);
         this._checkContentFilled(); 
       },
       _createBody: function() {
         this._body = {
-          about: this._documentTitle,
-          aboutUrl: this._pageURL,
           body: this.$.textarea.value,
           subject: this.$.text.value,
           toUserIds: this.toUserIds
         }
+        if (!this._hideAboutDetails) {
+          this._body.about = this._documentTitle,
+          this._body.aboutUrl = this._pageURL 
+        }
+      },
+      _handleError: function(e) {
+        this.error = true;
+        this.$.sendButton.loading = false;
+        this.$.sendButton.disabled = false;
+      },
+      _handleUndo: function(e) {
+        this._hideAboutDetails = false;
+      },
+      _handleRemove: function(e) {
+        this._hideAboutDetails = true;
       },
       _handleResponse: function(e) {
+        if(window.s && s.tl) {
+          s.tl(true, "o", "Mailbox: Thread Created");
+          s.tl(true, "o", "Mailbox: Message Sent");
+        }
         if (e.detail.status < 400) this.$.dialogBox.close();
+        this.$.sendButton.loading = false;
+        this._clearText();
+        this.fire('birch-message-sent', e.detail);
+
       },
       _postMessage: function() {
         this.$.sendButton.loading = true;
         this.$.sendButton.disabled = true;
-        this._createBody()
+        this._createBody();
         this.$.sendReq.generateRequest();
       }
 
