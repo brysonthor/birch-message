@@ -34,35 +34,136 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       suite('<birch-message>', function() {
 
         var myEl;
+        var cedarDialog
 
         setup(function() {
           myEl = fixture('birch-message-fixture');
+          cedarDialog = Polymer.dom(myEl.root).querySelector('#dialogBox');
+          paperDialog = Polymer.dom(Polymer.dom(myEl.root).querySelector('#dialogBox').root).querySelector('#modal');
         });
 
-        test('defines the "author" property', function() {
-          assert.equal(myEl.author.name, 'Dimitri Glazkov');
-          assert.equal(myEl.author.image, 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg');
+        test('Open and close functions exist and are called', function(done) {
+          var opened = sinon.spy(cedarDialog, 'open');
+          myEl.open();
+          expect(opened.calledOnce).to.be.true;
+
+          var closed = sinon.spy(cedarDialog, 'close');
+          myEl.close();
+          expect(opened.calledOnce).to.be.true;
+
+          done()
         });
 
-        test('says hello', function() {
-          assert.equal(myEl.sayHello(), 'birch-message says, Hello World!');
+        test('Post message success/event', function(done){
+          var server = sinon.fakeServer.create();
+          var handleResponse = sinon.spy(myEl, '_handleResponse');
+          myEl.open();
 
-          var greetings = myEl.sayHello('greetings Earthlings');
-          assert.equal(greetings, 'birch-message says, greetings Earthlings');
-        });
+          server.respondWith(
+            'POST',
+            /\/fst\/mailbox\/u2ms\/api\/v1\//,
+            [
+              200,
+              { "Content-Type": "application/json" },
+              '{"success": true}'
+            ]
+          );
 
-        test('fires lasers', function(done) {
-          myEl.addEventListener('birch-message-lasers', function(event) {
-            assert.equal(event.detail.sound, 'Pew pew!');
+          myEl._postMessage();
+
+          server.respond();
+          
+          myEl.addEventListener('birch-message-sent', function(e){
+            expect(e.detail.response.success).to.be.true;
+            expect(handleResponse.calledOnce).to.be.true;
+            expect(paperDialog.opened).to.be.false;
             done();
           });
-          myEl.fireLasers();
+
+          Polymer.dom.flush();
         });
 
-        test('distributed children', function() {
-          var els = myEl.getContentChildren();
-          assert.equal(els.length, 1, 'one distributed node');
-          assert.equal(els[0], myEl.querySelector('h2'), 'content distributed correctly');
+        test('Post message failure/event', function(done){
+          var server = sinon.fakeServer.create();
+          var handleError = sinon.spy(myEl, '_handleError');
+
+          server.respondWith(
+            'POST',
+            /\/fst\/mailbox\/u2ms\/api\/v1\//,
+            [
+              400,
+              { "Content-Type": "application/json" },
+              '{"success": true}'
+            ]
+          );
+
+          myEl._postMessage();
+
+          server.respond();
+          
+          myEl.addEventListener('birch-message-error', function(e){
+            expect(Boolean(e.detail.error)).to.be.true;
+            expect(handleError.calledOnce).to.be.true;
+            expect(myEl.error).to.be.true;
+            done();
+          });
+
+          Polymer.dom.flush();
+        });
+
+        test('Test count character method', function(done) {
+          var checkContentFilled = sinon.spy(myEl, '_checkContentFilled');
+
+          myEl.$.textarea.value = "dude";
+          myEl._countChar();
+          
+          setTimeout(function(){
+            expect(myEl._charactersLeft).to.equal(9996);
+            expect(myEl.$.sendButton.disabled).to.be.true;
+            expect(checkContentFilled.calledOnce).to.be.true;
+            done();
+          }, 350);
+        });
+
+        test('Test check content filled method', function(done) {
+          myEl.$.textarea.value = "dude";
+          myEl.$.text.value = "text";
+
+          myEl._checkContentFilled();
+
+          setTimeout(function(){
+            expect(myEl.$.sendButton.disabled).to.be.false;
+            expect(myEl.error).to.be.false;
+            done();
+          }, 300);
+        });
+
+        test('Window level methods called/dont close if error status code', function(){
+          window.s = {};
+          s.tl = function(){};
+
+          myEl.open();
+
+          var windowFunction = sinon.spy(s, 'tl');
+
+          var mockE = {
+            detail: {
+              status: 400
+            }
+          }
+          myEl._handleResponse(mockE)
+
+          expect(paperDialog.opened).to.be.true;
+          expect(windowFunction.calledTwice).to.be.true;
+
+        }, 200);
+
+        test('Test remove and undo of message about section', function(){
+          myEl._handleUndo();
+          expect(myEl._hideAboutDetails).to.be.false;
+
+          myEl._handleRemove();
+          expect(myEl._hideAboutDetails).to.be.true;
         });
 
       });

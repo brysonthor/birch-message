@@ -26,12 +26,6 @@ Example:
 
     <birch-message></birch-message>
 
-Example:
-
-    <birch-message>
-      <h2>Hello birch-message</h2>
-    </birch-message>
-
 @demo demo/index.html
 @hero hero.svg
 -->
@@ -102,14 +96,23 @@ Example:
         ],
 
       properties: {
+        /** 
+         * Goes in the "To" row. Identifies the contact name of the person you the user is sending a message to.
+        **/
         contactName: {
           type: String,
           value: "Patron"
         },
+        /**
+         * Will be set to true if there is an error in the call for the data.
+        **/
         error: {
           type: Boolean,
           value: false
         },
+        /**
+         * An array of the user IDs you want to send the message to. Must be an array or network call won't work.
+        **/
         toUserIds: {
           type: Array
         },
@@ -133,11 +136,15 @@ Example:
           value: location.href
         }
       },
-
+      /** 
+        Method for opening the message dialog.
+      **/
       open: function() {
         this.$.dialogBox.open();
       },
-
+      /** 
+        Method for closing the message dialog.
+      **/
       close: function() {
         this.$.dialogBox.close();
       },
@@ -169,9 +176,11 @@ Example:
         }
       },
       _handleError: function(e) {
+        console.log('error')
         this.error = true;
         this.$.sendButton.loading = false;
         this.$.sendButton.disabled = false;
+        this.fire('birch-message-error', e.detail);
       },
       _handleUndo: function(e) {
         this._hideAboutDetails = false;
@@ -180,6 +189,7 @@ Example:
         this._hideAboutDetails = true;
       },
       _handleResponse: function(e) {
+        console.log('success')
         if(window.s && s.tl) {
           s.tl(true, "o", "Mailbox: Thread Created");
           s.tl(true, "o", "Mailbox: Message Sent");
@@ -188,7 +198,6 @@ Example:
         this.$.sendButton.loading = false;
         this._clearText();
         this.fire('birch-message-sent', e.detail);
-
       },
       _postMessage: function() {
         this.$.sendButton.loading = true;
