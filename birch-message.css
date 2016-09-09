@@ -1,7 +1,6 @@
 :host {
   --cedar-dialog: {
     max-width: 500px !important;
-    max-height: 700px !important;
   }
 }
 #to-section {
