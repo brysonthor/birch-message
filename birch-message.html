@@ -34,7 +34,6 @@ Example:
     <style include='fs-styles'></style>
     <link rel="import" type="css" href="birch-message.css">
   <template>
-    <wc-i18n-src locale='[[lang]]' locale-dir='[[localeDir()]]' domain='birch-message'></wc-i18n-src>
     <iron-ajax id="sendReq"
       url="[[ajaxBase]]/fst/mailbox/u2ms/api/v1/threads"
       headers="[[authHeaders]]"
@@ -45,10 +44,10 @@ Example:
       on-response="_handleResponse"
       on-error="_handleError"></iron-ajax>
     <cedar-dialog id="dialogBox" modal>
-        <h4 header><wc-i18n key='birch-message.new_message'></wc-i18n></h4>
+        <h4 header>[[i18n('new_message')]]</h4>
         <div id="innerDialog" content>
           <div id="to-section">
-            <p><wc-i18n key='birch-message.to'></wc-i18n></p>
+            <p>[[i18n('to')]]</p>
             <span>[[contactName]]</span>
           </div>
           <div id="about-section">
@@ -57,28 +56,28 @@ Example:
               <div hidden="[[_hideAboutDetails]]">[[_documentTitle]]</div>
               <div hidden="[[_hideAboutDetails]]">[[_pageURL]]</div>
             </div>
-            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleRemove" hidden="[[_hideAboutDetails]]"><wc-i18n key='birch-message.remove'></wc-i18n></a>
-            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleUndo" hidden="[[!_hideAboutDetails]]"><wc-i18n key='birch-message.undo'></wc-i18n></a>
+            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleRemove" hidden="[[_hideAboutDetails]]">[[i18n('remove')]]</a>
+            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleUndo" hidden="[[!_hideAboutDetails]]">[[i18n('undo')]]</a>
           </div>
           <div id="subject-section">
-            <label for="text"><wc-i18n key='birch-message.subject'></wc-i18n></label>
-            <wc-i18n key='birch-message.write_subject' provider value="{{writeSubject}}"></wc-i18n>
-            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder$="{{writeSubject}}"/>
+            <label for="text">[[i18n('subject')]]</label>
+            <span>[[i18n('write_subject')]]</span>
+            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder$="{{i18n('writeSubject')}}"/>
           </div>
           <div id="message-section">
-            <label for="textarea"><wc-i18n key='birch-message.message'></wc-i18n></label>
-            <wc-i18n id="writeMessage" provider key='birch-message.write_message' value="{{writeMessage}}"></wc-i18n>
-            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder$="{{writeMessage}}" on-keyup="_countChar"></textarea>
+            <label for="textarea">[[i18n('message')]]</label>
+            <span id="writeMessage">[[i18n('write_message')]]</span>
+            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder$="{{i18n('writeMessage')}}" on-keyup="_countChar"></textarea>
             <p class="char-count">[[_charactersLeft]]</p>
           </div>
           <div id="error-section" hidden="[[!error]]">
-            <wc-i18n key='birch-message.error' provider value="{{errorMessage}}"></wc-i18n>
-            <cedar-alert alert-type="error">[[errorMessage]]</cedar-alert>
+            <span>[[i18n('error')]]</span>
+            <cedar-alert alert-type="error">[[i18n('error')]]</cedar-alert>
           </div>
         </div>
         <div id="footer-buttons" footer>
-          <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled><wc-i18n key='birch-message.send'></wc-i18n></button>
-          <button is='fs-button' type="button" option="minor" on-tap="close"><wc-i18n key='birch-message.cancel'></wc-i18n></button>
+          <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled>[[i18n('send')]]</button>
+          <button is='fs-button' type="button" option="minor" on-tap="close">[[i18n('cancel')]]</button>
         </div>
       </div>
     </cedar-dialog>
@@ -92,11 +91,11 @@ Example:
         behaviors: [
           OakAJAXBehavior,
           OakI18nBehavior,
-          WCI18nBehavior
+          WCI18n()
         ],
 
       properties: {
-        /** 
+        /**
          * Goes in the "To" row. Identifies the contact name of the person you the user is sending a message to.
         **/
         contactName: {
@@ -136,13 +135,13 @@ Example:
           value: location.href
         }
       },
-      /** 
+      /**
         Method for opening the message dialog.
       **/
       open: function() {
         this.$.dialogBox.open();
       },
-      /** 
+      /**
         Method for closing the message dialog.
       **/
       close: function() {
@@ -162,7 +161,7 @@ Example:
         this.debounce('count-debouncer', function(){
           this._charactersLeft = 10000 - this.$.textarea.value.length;
         }, 300);
-        this._checkContentFilled(); 
+        this._checkContentFilled();
       },
       _createBody: function() {
         this._body = {
@@ -172,7 +171,7 @@ Example:
         }
         if (!this._hideAboutDetails) {
           this._body.about = this._documentTitle,
-          this._body.aboutUrl = this._pageURL 
+          this._body.aboutUrl = this._pageURL
         }
       },
       _handleError: function(e) {

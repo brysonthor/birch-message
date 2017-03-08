@@ -23,8 +23,8 @@
     "fs-button": "jshcrowthe/fs-button",
     "fs-styles": "fs-webdev/fs-styles",
     "iron-ajax": "^1.4.3",
-    "wc-i18n": "jshcrowthe/wc-i18n#^1.1.0",
-    "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior",
+    "wc-i18n": "jshcrowthe/wc-i18n#^2.1.0",
+    "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",
     "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior",
     "cedar-alert": "FamilySearchElements/cedar-alert"
   },

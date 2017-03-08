@@ -20,8 +20,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <p>An example of <code>&lt;birch-message&gt;</code>:</p>
 
+    <div>
+      <label for="langPicker">Choose page language: </label>
+      <select id="langPicker">
+        <option selected>en</option>
+        <option>es</option>
+        <option>fr</option>
+        <option>ko</option>
+      </select>
+    </div>
+
     <button id="dialog-popup">Trigger Message Dialog</button>
     <birch-message></birch-message>
+
     <script>
       var toUserIds = ["cis.user.MMMS-LR4F"];
       var seedElement = document.querySelector('birch-message');
@@ -32,6 +43,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         seedElement.open();
       });
 
+      var langPicker = document.querySelector('#langPicker');
+      langPicker.addEventListener('change', function() {
+        document.querySelector('birch-message').language = langPicker.value;
+      });
     </script>
 
   </body>
