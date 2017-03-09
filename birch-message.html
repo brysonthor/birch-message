@@ -62,12 +62,12 @@ Example:
           <div id="subject-section">
             <label for="text">[[i18n('subject')]]</label>
             <span>[[i18n('write_subject')]]</span>
-            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder$="{{i18n('writeSubject')}}"/>
+            <input id="text" type="text" maxlength="255" on-keyup="_checkContentFilled" placeholder$="{{i18n('write_subject')}}"/>
           </div>
           <div id="message-section">
             <label for="textarea">[[i18n('message')]]</label>
             <span id="writeMessage">[[i18n('write_message')]]</span>
-            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder$="{{i18n('writeMessage')}}" on-keyup="_countChar"></textarea>
+            <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder$="{{i18n('write_message')}}" on-keyup="_countChar"></textarea>
             <p class="char-count">[[_charactersLeft]]</p>
           </div>
           <div id="error-section" hidden="[[!error]]">
