@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../cedar-dialog/cedar-dialog.html">
+<link rel="import" href="../dialog-el/fs-dialog.html">
 <link rel="import" href="../fs-button/fs-button.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
@@ -44,7 +44,7 @@ Example:
       body="[[_body]]"
       on-response="_handleResponse"
       on-error="_handleError"></iron-ajax>
-    <cedar-dialog id="dialogBox" modal>
+     <fs-dialog id="dialogBox" modal>
         <h4 header><wc-i18n key='birch-message.new_message'></wc-i18n></h4>
         <div id="innerDialog" content>
           <div id="to-section">
@@ -81,7 +81,7 @@ Example:
           <button is='fs-button' type="button" option="minor" on-tap="close"><wc-i18n key='birch-message.cancel'></wc-i18n></button>
         </div>
       </div>
-    </cedar-dialog>
+    </fs-dialog>
 
   </template>
 
@@ -140,7 +140,7 @@ Example:
         Method for opening the message dialog.
       **/
       open: function() {
-        this.$.dialogBox.open();
+        this.$.dialogBox.show();
       },
       /** 
         Method for closing the message dialog.

@@ -18,7 +18,7 @@
     "/test/"
   ],
   "dependencies": {
-    "cedar-dialog": "FamilySearchElements/cedar-dialog#adding-dialog",
+    "dialog-el": "fs-webdev/dialog-el",
     "polymer": "Polymer/polymer#^1.2.0",
     "fs-button": "jshcrowthe/fs-button",
     "fs-styles": "fs-webdev/fs-styles",
@@ -33,6 +33,7 @@
     "web-component-tester": "^4.0.0"
   },
   "resolutions": {
-    "polymer": "^1.2.0"
+    "polymer": "^1.2.0",
+    "promise-polyfill": "^6.0.1"
   }
 }
