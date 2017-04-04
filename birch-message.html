@@ -43,8 +43,8 @@ Example:
             <p><wc-i18n key="birch-message.to"></wc-i18n></p>
             <span>[[contactName]]</span>
           </div>
-          <div id="about-section">
-            <p>About</p>
+          <div id="about-section" hidden="[[disableAbout]]">
+            <p><wc-i18n key="birch-message.about"></wc-i18n></p>
             <div class="about-data">
               <div hidden="[[_hideAboutDetails]]">[[_documentTitle]]</div>
               <div hidden="[[_hideAboutDetails]]">[[_pageURL]]</div>
@@ -94,6 +94,10 @@ Example:
         contactName: {
           type: String,
           value: "Patron"
+        },
+        disableAbout: {
+          type: Boolean,
+          value: false
         },
         /**
          * Will be set to true if there is an error in the call for the data.
