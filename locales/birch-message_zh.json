@@ -1,13 +1,15 @@
 {
-	"send": "傳送",
-	"cancel": "取消",
-	"remove": "移除",
-	"undo": "復原",
-	"message": "信息",
-	"new_message": "新信息",
-	"to": "致",
-	"subject": "主旨",
-	"error": "很抱歉，與伺服器通訊時發生問題。 請稍後再試，如果問題仍然存在請聯絡技術支援。 很抱歉造成你的不便。",
-	"write_message": "填寫信息",
-	"write_subject": "填寫主旨"
+  "_LRM_PKTAG855": "birch-message_1_156 - CHANGES-ONLY",
+  "about": "關於",
+  "cancel": "取消",
+  "error": "很抱歉，與伺服器通訊時發生問題。 請稍後再試，如果問題仍然存在請聯絡技術支援。 很抱歉造成你的不便。",
+  "message": "信息",
+  "new_message": "新信息",
+  "remove": "移除",
+  "send": "傳送",
+  "subject": "主旨",
+  "to": "致",
+  "undo": "復原",
+  "write_message": "填寫信息",
+  "write_subject": "填寫主旨"
 }
