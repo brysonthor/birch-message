@@ -1,13 +1,15 @@
 {
-	"send": "Invia",
-	"cancel": "Annulla",
-	"remove": "Rimuovi",
-	"undo": "Annulla",
-	"message": "Messaggio",
-	"new_message": "Nuovo messaggio",
-	"to": "A",
-	"subject": "Oggetto",
-	"error": "Spiacenti. C’è stato un problema nella comunicazione con il server. Riprova più tardi o contatta l’assistenza tecnica se il problema persiste. Ci scusiamo per l’inconveniente.",
-	"write_message": "Scrivi un messaggio",
-	"write_subject": "Scrivi un oggetto"
+  "_LRM_PKTAG478": "birch-message_1_151 - CHANGES-ONLY",
+  "about": "Riguardante",
+  "cancel": "Annulla",
+  "error": "Spiacenti. C’è stato un problema nella comunicazione con il server. Riprova più tardi o contatta l’assistenza tecnica se il problema persiste. Ci scusiamo per l’inconveniente.",
+  "message": "Messaggio",
+  "new_message": "Nuovo messaggio",
+  "remove": "Rimuovi",
+  "send": "Invia",
+  "subject": "Oggetto",
+  "to": "A",
+  "undo": "Annulla",
+  "write_message": "Scrivi un messaggio",
+  "write_subject": "Scrivi un oggetto"
 }

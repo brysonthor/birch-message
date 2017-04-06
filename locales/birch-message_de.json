@@ -1,13 +1,15 @@
 {
-	"send": "Senden",
-	"cancel": "Abbrechen",
-	"remove": "Entfernen",
-	"undo": "Rückgängig machen",
-	"message": "Nachricht",
-	"new_message": "Neue Nachricht",
-	"to": "An",
-	"subject": "Betreff",
-	"error": "Leider ist bei der Verbindung mit dem Server ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder wenden Sie sich an den technischen Support, falls das Problem weiterhin besteht. Wir bedauern etwaige Unannehmlichkeiten.",
-	"write_message": "Eine Nachricht schreiben",
-	"write_subject": "Einen Betreff schreiben"
+  "_LRM_PKTAG468": "birch-message_1_157 - CHANGES-ONLY",
+  "about": "Betreff",
+  "cancel": "Abbrechen",
+  "error": "Leider ist bei der Verbindung mit dem Server ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder wenden Sie sich an den technischen Support, falls das Problem weiterhin besteht. Wir bedauern etwaige Unannehmlichkeiten.",
+  "message": "Nachricht",
+  "new_message": "Neue Nachricht",
+  "remove": "Entfernen",
+  "send": "Senden",
+  "subject": "Betreff",
+  "to": "An",
+  "undo": "Rückgängig machen",
+  "write_message": "Eine Nachricht schreiben",
+  "write_subject": "Einen Betreff schreiben"
 }
