@@ -21,7 +21,7 @@
     "dialog-el": "fs-webdev/dialog-el",
     "polymer": "Polymer/polymer#^1.2.0",
     "fs-button": "jshcrowthe/fs-button",
-    "fs-styles": "fs-webdev/fs-styles",
+    "fs-styles": "fs-webdev/fs-styles#3.x",
     "iron-ajax": "^1.4.3",
     "wc-i18n": "jshcrowthe/wc-i18n#^1.1.0",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior",
