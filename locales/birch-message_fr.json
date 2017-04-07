@@ -1,13 +1,15 @@
 {
-	"send": "Envoyer",
-	"cancel": "Annuler",
-	"remove": "Supprimer",
-	"undo": "Annuler",
-	"message": "Message",
-	"new_message": "Nouveau message",
-	"to": "À",
-	"subject": "Objet",
-	"error": "Désolé, une erreur de communication avec le serveur s’est produite. Veuillez réessayer plus tard ou prendre contact avec l’assistance technique si le problème persiste. Veuillez nous excuser de ce désagrément.",
-	"write_message": "Rédiger un message",
-	"write_subject": "Écrire un objet"
+  "_LRM_PKTAG903": "birch-message_1_150 - CHANGES-ONLY",
+  "about": "À propos de",
+  "cancel": "Annuler",
+  "error": "Désolé, une erreur de communication avec le serveur s’est produite. Veuillez réessayer plus tard ou prendre contact avec l’assistance technique si le problème persiste. Veuillez nous excuser de ce désagrément.",
+  "message": "Message",
+  "new_message": "Nouveau message",
+  "remove": "Supprimer",
+  "send": "Envoyer",
+  "subject": "Objet",
+  "to": "À",
+  "undo": "Annuler",
+  "write_message": "Rédiger un message",
+  "write_subject": "Écrire un objet"
 }
