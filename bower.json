@@ -18,10 +18,10 @@
     "/test/"
   ],
   "dependencies": {
-    "cedar-dialog": "FamilySearchElements/cedar-dialog#adding-dialog",
+    "dialog-el": "fs-webdev/dialog-el",
     "polymer": "Polymer/polymer#^1.2.0",
     "fs-button": "jshcrowthe/fs-button",
-    "fs-styles": "fs-webdev/fs-styles",
+    "fs-styles": "fs-webdev/fs-styles#3.x",
     "iron-ajax": "^1.4.3",
     "wc-i18n": "jshcrowthe/wc-i18n#^2.1.0",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",
@@ -33,6 +33,8 @@
     "web-component-tester": "^4.0.0"
   },
   "resolutions": {
-    "polymer": "^1.2.0"
+    "polymer": "^1.2.0",
+    "promise-polyfill": "^6.0.1",
+    "fs-styles": "3.x"
   }
 }

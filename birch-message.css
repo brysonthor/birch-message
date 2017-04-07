@@ -1,6 +1,14 @@
-:host {
-  --cedar-dialog: {
-    max-width: 500px !important;
+#innerDialog {
+  min-width: 445px;
+}
+@media all and (max-width: 550px) {
+  #innerDialog {
+    min-width: 370px;
+  }
+}
+@media all and (max-width: 430px) {
+  #innerDialog {
+    min-width: 82vw;
   }
 }
 #to-section {
@@ -45,8 +53,14 @@
   padding: 14px 0;
 }
 #message-section #textarea {
-  min-height: 130px;
-  max-height: 200px;
+  min-height: 170px;
+  max-height: 220px;
+}
+@media all and (max-width: 550px) {
+  #message-section #textarea {
+    min-height: 120px;
+    max-height: 170px;
+  }
 }
 #message-section .char-count {
   text-align: right;

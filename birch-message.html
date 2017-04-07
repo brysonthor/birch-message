@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../cedar-dialog/cedar-dialog.html">
+<link rel="import" href="../dialog-el/fs-dialog.html">
 <link rel="import" href="../fs-button/fs-button.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
@@ -43,14 +43,14 @@ Example:
       body="[[_body]]"
       on-response="_handleResponse"
       on-error="_handleError"></iron-ajax>
-    <cedar-dialog id="dialogBox" modal>
+    <fs-dialog id="dialogBox" modal>
         <h4 header>[[i18n('new_message')]]</h4>
         <div id="innerDialog" content>
           <div id="to-section">
             <p>[[i18n('to')]]</p>
             <span>[[contactName]]</span>
           </div>
-          <div id="about-section">
+          <div id="about-section" hidden="[[disableAbout]]">
             <p>[[i18n('about')]]</p>
             <div class="about-data">
               <div hidden="[[_hideAboutDetails]]">[[_documentTitle]]</div>
@@ -80,7 +80,7 @@ Example:
           <button is='fs-button' type="button" option="minor" on-tap="close">[[i18n('cancel')]]</button>
         </div>
       </div>
-    </cedar-dialog>
+    </fs-dialog>
 
   </template>
 
@@ -101,6 +101,13 @@ Example:
         contactName: {
           type: String,
           value: "Patron"
+        },
+        /**
+         * Don't show the "about" section in the component
+        **/
+        disableAbout: {
+          type: Boolean,
+          value: false
         },
         /**
          * Will be set to true if there is an error in the call for the data.
@@ -139,7 +146,7 @@ Example:
         Method for opening the message dialog.
       **/
       open: function() {
-        this.$.dialogBox.open();
+        this.$.dialogBox.show();
       },
       /**
         Method for closing the message dialog.
@@ -182,9 +189,11 @@ Example:
         this.fire('birch-message-error', e.detail);
       },
       _handleUndo: function(e) {
+        e.detail.sourceEvent.stopPropagation();
         this._hideAboutDetails = false;
       },
       _handleRemove: function(e) {
+        e.detail.sourceEvent.stopPropagation();
         this._hideAboutDetails = true;
       },
       _handleResponse: function(e) {
