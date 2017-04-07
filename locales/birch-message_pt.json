@@ -1,13 +1,15 @@
 {
-	"send": "Enviar",
-	"cancel": "Cancelar",
-	"remove": "Excluir",
-	"undo": "Desfazer",
-	"message": "Mensagem",
-	"new_message": "Nova Mensagem",
-	"to": "Para",
-	"subject": "Assunto",
-	"error": "Desculpe, houve um problema de comunicação com o servidor. Tente novamente mais tarde ou entre em contato com o suporte técnico, se o problema persistir. Desculpe-nos pelo inconveniente.",
-	"write_message": "Escreva a mensagem.",
-	"write_subject": "Escreva o Assunto"
+  "_LRM_PKTAG971": "birch-message_1_154 - CHANGES-ONLY",
+  "about": "Sobre",
+  "cancel": "Cancelar",
+  "error": "Desculpe, houve um problema de comunicação com o servidor. Tente novamente mais tarde ou entre em contato com o suporte técnico, se o problema persistir. Desculpe-nos pelo inconveniente.",
+  "message": "Mensagem",
+  "new_message": "Nova Mensagem",
+  "remove": "Excluir",
+  "send": "Enviar",
+  "subject": "Assunto",
+  "to": "Para",
+  "undo": "Desfazer",
+  "write_message": "Escreva a mensagem.",
+  "write_subject": "Escreva o Assunto"
 }
