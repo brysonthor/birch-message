@@ -1,13 +1,15 @@
 {
-	"send": "Enviar",
-	"cancel": "Cancelar",
-	"remove": "Eliminar",
-	"undo": "Deshacer",
-	"message": "Mensaje",
-	"new_message": "Mensaje nuevo",
-	"to": "Para",
-	"subject": "Asunto",
-	"error": "Lo sentimos, se produjo un problema al comunicarse con el servidor. Por favor, inténtelo otra vez más tarde o si el problema persiste, póngase en contacto con el equipo de soporte técnico. Le pedimos disculpas por las molestias.",
-	"write_message": "Escriba un mensaje",
-	"write_subject": "Escriba el asunto"
+  "_LRM_PKTAG728": "birch-message_1_149 - CHANGES-ONLY",
+  "about": "Asunto",
+  "cancel": "Cancelar",
+  "error": "Lo sentimos, se produjo un problema al comunicarse con el servidor. Por favor, inténtelo otra vez más tarde o si el problema persiste, póngase en contacto con el equipo de soporte técnico. Le pedimos disculpas por las molestias.",
+  "message": "Mensaje",
+  "new_message": "Mensaje nuevo",
+  "remove": "Eliminar",
+  "send": "Enviar",
+  "subject": "Asunto",
+  "to": "Para",
+  "undo": "Deshacer",
+  "write_message": "Escriba un mensaje",
+  "write_subject": "Escriba el asunto"
 }
