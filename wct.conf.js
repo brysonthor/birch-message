@@ -1,18 +1,12 @@
 module.exports = {
   "plugins": {
-    "istanbul": {
-      "dir": "./coverage",
-      "reporters": [
-        "text-summary", "lcov"
-      ],
-      "exclude": [],
-
-      "include": [
-        "**/birch-message.html"
-      ]
-    },
-    "local": {
-      "browsers": ["chrome", "safari"]
+    "sauce": {
+      "disabled": true, 
+      "browsers": [
+        "Windows 8.1/internet explorer",
+        "Windows 10/microsoftedge",
+        "OS X 10.10/safari"
+    ]
     }
   }
 }
