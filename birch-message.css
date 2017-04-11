@@ -52,6 +52,11 @@
 #message-section {
   padding: 14px 0;
 }
+@media all and (min-width: 550px) {
+  #message-section {
+    width: 445px;
+  }
+}
 #message-section #textarea {
   min-height: 170px;
   max-height: 220px;
