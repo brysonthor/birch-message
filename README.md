@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/FamilySearchElements/birch-message.svg?branch=master)](https://travis-ci.org/FamilySearchElements/birch-message)
 # birch-message
 
 An element providing a starting point for your own reusable Polymer elements.
