@@ -50,12 +50,8 @@
   padding: 14px 0;
 }
 #message-section {
+  width: 100%;
   padding: 14px 0;
-}
-@media all and (min-width: 550px) {
-  #message-section {
-    width: 445px;
-  }
 }
 #message-section #textarea {
   min-height: 170px;
@@ -69,4 +65,12 @@
 }
 #message-section .char-count {
   text-align: right;
+}
+#close-icon {
+  top: 10px;
+  right: 10px;
+  opacity: 0.5;
+  transform: scale(0.7);
+  cursor: pointer;
+  position: absolute;
 }

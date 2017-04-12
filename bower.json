@@ -20,8 +20,8 @@
   "dependencies": {
     "dialog-el": "fs-webdev/dialog-el#~1.3.0",
     "polymer": "Polymer/polymer#^1.2.0",
-    "fs-button": "jshcrowthe/fs-button",
     "fs-styles": "fs-webdev/fs-styles#3.x",
+    "styles-wc": "git+https://github.com/fs-webdev/styles-wc#~2.1.7",
     "iron-ajax": "^1.4.3",
     "wc-i18n": "jshcrowthe/wc-i18n#^2.1.0",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",

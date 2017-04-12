@@ -10,7 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../dialog-el/fs-dialog.html">
-<link rel="import" href="../fs-button/fs-button.html">
+<link rel="import" href="../styles-wc/fs-button/fs-button.html">
+<link rel="import" href="../styles-wc/fs-icon/fs-icon.html">
 <link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
@@ -79,6 +80,7 @@ Example:
           <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled>[[i18n('send')]]</button>
           <button is='fs-button' type="button" option="minor" on-tap="close">[[i18n('cancel')]]</button>
         </div>
+        <fs-icon id="close-icon" icon="close" on-tap="close"></fs-icon>
       </div>
     </fs-dialog>
 
