@@ -18,7 +18,7 @@
     "/test/"
   ],
   "dependencies": {
-    "dialog-el": "fs-webdev/dialog-el~1.3.0",
+    "dialog-el": "fs-webdev/dialog-el#~1.3.0",
     "polymer": "Polymer/polymer#^1.2.0",
     "fs-button": "jshcrowthe/fs-button",
     "fs-styles": "fs-webdev/fs-styles#3.x",
