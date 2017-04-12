@@ -1,5 +1,7 @@
-#innerDialog {
-  min-width: 445px;
+@media all and (min-width: 550px) {
+  #innerDialog {
+    width: 480px;
+  }
 }
 @media all and (max-width: 550px) {
   #innerDialog {
@@ -50,8 +52,7 @@
   padding: 14px 0;
 }
 #message-section {
-  width: 100%;
-  padding: 14px 0;
+  width: 100%
 }
 #message-section #textarea {
   min-height: 170px;
