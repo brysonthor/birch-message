@@ -34,24 +34,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       suite('<birch-message>', function() {
 
         var myEl;
-        var cedarDialog
+        var fsDialog;
 
         setup(function() {
           myEl = fixture('birch-message-fixture');
-          cedarDialog = Polymer.dom(myEl.root).querySelector('#dialogBox');
-          paperDialog = Polymer.dom(Polymer.dom(myEl.root).querySelector('#dialogBox').root).querySelector('#modal');
+          fsDialog = Polymer.dom(myEl.root).querySelector('#dialogBox');
         });
 
-        test('Open and close functions exist and are called', function(done) {
-          var opened = sinon.spy(cedarDialog, 'open');
+        test('Open and close functions exist and are called', function() {
+          var opened = sinon.spy(fsDialog, 'show');
           myEl.open();
           expect(opened.calledOnce).to.be.true;
 
-          var closed = sinon.spy(cedarDialog, 'close');
+          var closed = sinon.spy(fsDialog, 'close');
           myEl.close();
           expect(opened.calledOnce).to.be.true;
-
-          done()
         });
 
         test('Post message success/event', function(done){
@@ -76,7 +73,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           myEl.addEventListener('birch-message-sent', function(e){
             expect(e.detail.response.success).to.be.true;
             expect(handleResponse.calledOnce).to.be.true;
-            expect(paperDialog.opened).to.be.false;
             done();
           });
 
@@ -152,17 +148,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           }
           myEl._handleResponse(mockE)
-
-          expect(paperDialog.opened).to.be.true;
           expect(windowFunction.calledTwice).to.be.true;
 
         }, 200);
 
         test('Test remove and undo of message about section', function(){
-          myEl._handleUndo();
+          var mockE = {
+            detail: {
+              sourceEvent: {
+                stopPropagation: function(){}
+              } 
+            }
+          }
+          myEl._handleUndo(mockE);
           expect(myEl._hideAboutDetails).to.be.false;
 
-          myEl._handleRemove();
+          myEl._handleRemove(mockE);
           expect(myEl._hideAboutDetails).to.be.true;
         });
 
