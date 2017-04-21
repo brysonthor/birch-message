@@ -10,15 +10,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../dialog-el/fs-dialog.html">
+<link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../styles-wc/fs-button/fs-button.html">
 <link rel="import" href="../styles-wc/fs-icon/fs-icon.html">
-<link rel="import" href="../fs-styles/fs-styles.html">
 <link rel="import" href="../oak-i18n-behavior/oak-i18n-behavior.html">
 <link rel="import" href="../wc-i18n/wc-i18n.html">
 <link rel="import" href="../oak-ajax-behavior/oak-ajax-behavior.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
-<link rel="import" href="../cedar-alert/cedar-alert.html">
-
 
 <!--
 An element providing a solution to no problem in particular.
@@ -34,7 +32,7 @@ Example:
 <dom-module id="birch-message">
     <style include='fs-styles'></style>
     <link rel="import" type="css" href="birch-message.css">
-  <template>
+  <template strip-whitespace>
     <iron-ajax id="sendReq"
       url="[[ajaxBase]]/fst/mailbox/u2ms/api/v1/threads"
       headers="[[authHeaders]]"
@@ -45,21 +43,24 @@ Example:
       on-response="_handleResponse"
       on-error="_handleError"></iron-ajax>
     <fs-dialog id="dialogBox" modal>
+      <template is="dom-if" if="[[_show]]">
         <h4 header>[[i18n('new_message')]]</h4>
         <div id="innerDialog" content>
           <div id="to-section">
             <p>[[i18n('to')]]</p>
             <span>[[contactName]]</span>
           </div>
-          <div id="about-section" hidden="[[disableAbout]]">
-            <p>[[i18n('about')]]</p>
-            <div class="about-data">
-              <div hidden="[[_hideAboutDetails]]">[[_documentTitle]]</div>
-              <div hidden="[[_hideAboutDetails]]">[[_pageURL]]</div>
+          <template is="dom-if" if="[[!disableAbout]]">
+            <div id="about-section">
+              <p>[[i18n('about')]]</p>
+              <div class="about-data">
+                <div hidden="[[_hideAboutDetails]]">[[_documentTitle]]</div>
+                <div hidden="[[_hideAboutDetails]]">[[_pageURL]]</div>
+              </div>
+              <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleRemove" hidden="[[_hideAboutDetails]]">[[i18n('remove')]]</a>
+              <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleUndo" hidden="[[!_hideAboutDetails]]">[[i18n('undo')]]</a>
             </div>
-            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleRemove" hidden="[[_hideAboutDetails]]">[[i18n('remove')]]</a>
-            <a class="remove-undo-about" href="javascript:void(0)" on-tap="_handleUndo" hidden="[[!_hideAboutDetails]]">[[i18n('undo')]]</a>
-          </div>
+          </template>
           <div id="subject-section">
             <label for="text">[[i18n('subject')]]</label>
             <span>[[i18n('write_subject')]]</span>
@@ -71,17 +72,18 @@ Example:
             <textarea id="textarea" rows="1" cols="48" maxlength="10000" placeholder$="{{i18n('write_message')}}" on-keyup="_countChar"></textarea>
             <p class="char-count">[[_charactersLeft]]</p>
           </div>
-          <div id="error-section" hidden="[[!error]]">
-            <span>[[i18n('error')]]</span>
-            <cedar-alert alert-type="error">[[i18n('error')]]</cedar-alert>
-          </div>
+          <template is="dom-if" if="[[_error]]">
+            <div id="error-section">
+              <fs-alert alert-type="error">[[i18n('error')]]</fs-alert>
+            </div>
+          </template>
         </div>
         <div id="footer-buttons" footer>
           <button is='fs-button' id="sendButton" type="button" option="recommended" on-tap="_postMessage" disabled>[[i18n('send')]]</button>
           <button is='fs-button' type="button" option="minor" on-tap="close">[[i18n('cancel')]]</button>
         </div>
         <fs-icon id="close-icon" icon="close" on-tap="close"></fs-icon>
-      </div>
+      </template>
     </fs-dialog>
 
   </template>
@@ -116,7 +118,7 @@ Example:
         **/
         error: {
           type: Boolean,
-          value: false
+          observer: '_loadError'
         },
         /**
          * An array of the user IDs you want to send the message to. Must be an array or network call won't work.
@@ -132,23 +134,35 @@ Example:
           value: 10000
         },
         _documentTitle: {
-          type: String,
-          value: document.title
+          type: String
+        },
+        _error: {
+          type: Boolean
         },
         _hideAboutDetails: {
-          type: Boolean,
-          value: false
+          type: Boolean
         },
         _pageURL: {
-          type: String,
-          value: location.href
+          type: String
+        },
+        /**
+         * No messaging content loads until the 
+        **/
+        _show: {
+          type: Boolean
         }
       },
+      
       /**
         Method for opening the message dialog.
       **/
       open: function() {
+        this._show = true;
         this.$.dialogBox.show();
+        if (!this.disableAbout) {
+          this._documentTitle = document.title;
+          this._pageURL = location.href;
+        }
       },
       /**
         Method for closing the message dialog.
@@ -199,7 +213,6 @@ Example:
         this._hideAboutDetails = true;
       },
       _handleResponse: function(e) {
-        console.log('success')
         if(window.s && s.tl) {
           s.tl(true, "o", "Mailbox: Thread Created");
           s.tl(true, "o", "Mailbox: Message Sent");
@@ -208,6 +221,12 @@ Example:
         this.$.sendButton.loading = false;
         this._clearText();
         this.fire('birch-message-sent', e.detail);
+      },
+      _loadError: function(val) {
+        if (val) {
+          this.importHref(this.resolveUrl("../styles-wc/fs-alert/fs-alert.html"));
+          this._error = true;
+        }
       },
       _postMessage: function() {
         this.$.sendButton.loading = true;

@@ -25,8 +25,7 @@
     "iron-ajax": "^1.4.3",
     "wc-i18n": "jshcrowthe/wc-i18n#^2.1.0",
     "oak-i18n-behavior": "FamilySearchElements/oak-i18n-behavior#1.x",
-    "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior",
-    "cedar-alert": "FamilySearchElements/cedar-alert"
+    "oak-ajax-behavior": "FamilySearchElements/oak-ajax-behavior"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

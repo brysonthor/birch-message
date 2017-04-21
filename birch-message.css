@@ -58,6 +58,11 @@
   min-height: 170px;
   max-height: 220px;
 }
+
+#error-section {
+  margin-bottom: 15px;
+}
+
 @media all and (max-width: 550px) {
   #message-section #textarea {
     min-height: 120px;
