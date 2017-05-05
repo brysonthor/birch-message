@@ -35,6 +35,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         var myEl;
         var fsDialog;
+        var successPost = function(done, url, newApi){
+          var server = sinon.fakeServer.create();
+          var handleResponse = sinon.spy(myEl, '_handleResponse');
+          myEl.open();
+          if(newApi) myEl.fromUserId = 'FAKE_CIS_ID';
+          server.respondWith(
+            'POST',
+            url,
+            [
+              200,
+              { "Content-Type": "application/json" },
+              '{"success": true}'
+            ]
+          );
+
+          myEl._postMessage();
+
+          server.respond();
+
+          myEl.addEventListener('birch-message-sent', function(e){
+            expect(e.detail.response.success).to.be.true;
+            expect(handleResponse.calledOnce).to.be.true;
+            done();
+          });
+
+          Polymer.dom.flush();
+        };
+        var failurePost = function(done, url, newApi){
+          var server = sinon.fakeServer.create();
+          var handleError = sinon.spy(myEl, '_handleError');
+          if(newApi) myEl.fromUserId = 'FAKE_CIS_ID';
+          server.respondWith(
+            'POST',
+            url,
+            [
+              400,
+              { "Content-Type": "application/json" },
+              '{"success": true}'
+            ]
+          );
+
+          myEl._postMessage();
+
+          server.respond();
+
+          myEl.addEventListener('birch-message-error', function(e){
+            expect(Boolean(e.detail.error)).to.be.true;
+            expect(handleError.calledOnce).to.be.true;
+            expect(myEl.error).to.be.true;
+            done();
+          });
+
+          Polymer.dom.flush();
+        };
 
         setup(function() {
           myEl = fixture('birch-message-fixture');
@@ -51,61 +105,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(opened.calledOnce).to.be.true;
         });
 
-        test('Post message success/event', function(done){
-          var server = sinon.fakeServer.create();
-          var handleResponse = sinon.spy(myEl, '_handleResponse');
-          myEl.open();
+        test('Post message success/event', function(done){successPost(done, /\/fst\/mailbox\/u2ms\/api\/v1/)});
 
-          server.respondWith(
-            'POST',
-            /\/fst\/mailbox\/u2ms\/api\/v1\//,
-            [
-              200,
-              { "Content-Type": "application/json" },
-              '{"success": true}'
-            ]
-          );
+        test('Post message failure/event', function(done){failurePost(done, /\/fst\/mailbox\/u2ms\/api\/v1/)});
 
-          myEl._postMessage();
+        test('New api post message success/event', function(done){successPost(done, /\/fst\/fs-messages\/threads/, true)});
 
-          server.respond();
-          
-          myEl.addEventListener('birch-message-sent', function(e){
-            expect(e.detail.response.success).to.be.true;
-            expect(handleResponse.calledOnce).to.be.true;
-            done();
-          });
-
-          Polymer.dom.flush();
-        });
-
-        test('Post message failure/event', function(done){
-          var server = sinon.fakeServer.create();
-          var handleError = sinon.spy(myEl, '_handleError');
-
-          server.respondWith(
-            'POST',
-            /\/fst\/mailbox\/u2ms\/api\/v1\//,
-            [
-              400,
-              { "Content-Type": "application/json" },
-              '{"success": true}'
-            ]
-          );
-
-          myEl._postMessage();
-
-          server.respond();
-          
-          myEl.addEventListener('birch-message-error', function(e){
-            expect(Boolean(e.detail.error)).to.be.true;
-            expect(handleError.calledOnce).to.be.true;
-            expect(myEl.error).to.be.true;
-            done();
-          });
-
-          Polymer.dom.flush();
-        });
+        test('New api post message failure/event', function(done){failurePost(done, /\/fst\/fs-messages\/threads/, true)});
 
         test('Test count character method', function(done) {
           var checkContentFilled = sinon.spy(myEl, '_checkContentFilled');

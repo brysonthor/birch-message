@@ -36,7 +36,6 @@ Example:
     <link rel="import" type="css" href="birch-message.css">
   <template>
     <iron-ajax id="sendReq"
-      url="[[ajaxBase]]/fst/mailbox/u2ms/api/v1/threads"
       headers="[[authHeaders]]"
       method="POST"
       content-type="application/json"
@@ -124,6 +123,12 @@ Example:
         toUserIds: {
           type: Array
         },
+        /**
+         * The User Id of the user sending the message.
+        **/
+        fromUserId: {
+          type: String
+        },
         _body: {
           type: Object
         },
@@ -172,12 +177,26 @@ Example:
         }, 300);
         this._checkContentFilled();
       },
-      _createBody: function() {
+      _createOldBody: function() {
         this._body = {
           body: this.$.textarea.value,
           subject: this.$.text.value,
           toUserIds: this.toUserIds
         }
+        if (!this._hideAboutDetails) {
+          this._body.about = this._documentTitle,
+            this._body.aboutUrl = this._pageURL
+        }
+      },
+      _createBody: function() {
+        this._body = {
+          subject: this.$.text.value,
+          participantIds: this.toUserIds,
+          firstMessage: {
+            authorId: this.fromUserId,
+            body: this.$.textarea.value
+          }
+        };
         if (!this._hideAboutDetails) {
           this._body.about = this._documentTitle,
           this._body.aboutUrl = this._pageURL
@@ -212,8 +231,16 @@ Example:
       _postMessage: function() {
         this.$.sendButton.loading = true;
         this.$.sendButton.disabled = true;
-        this._createBody();
-        this.$.sendReq.generateRequest();
+        console.log(this.fromUserId);
+        if(this.fromUserId){
+          this._createBody();
+          this.$.sendReq.url = this.ajaxBase + '/fst/fs-messages/threads';
+          this.$.sendReq.generateRequest();
+        } else {
+          this._createOldBody();
+          this.$.sendReq.url = this.ajaxBase + '/fst/mailbox/u2ms/api/v1/threads';
+          this.$.sendReq.generateRequest();
+        }
       }
 
     });
