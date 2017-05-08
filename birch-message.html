@@ -231,16 +231,14 @@ Example:
       _postMessage: function() {
         this.$.sendButton.loading = true;
         this.$.sendButton.disabled = true;
-        console.log(this.fromUserId);
         if(this.fromUserId){
           this._createBody();
           this.$.sendReq.url = this.ajaxBase + '/fst/fs-messages/threads';
-          this.$.sendReq.generateRequest();
         } else {
           this._createOldBody();
           this.$.sendReq.url = this.ajaxBase + '/fst/mailbox/u2ms/api/v1/threads';
-          this.$.sendReq.generateRequest();
         }
+        this.$.sendReq.generateRequest();
       }
 
     });
