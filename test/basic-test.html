@@ -39,6 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var server = sinon.fakeServer.create();
           var handleResponse = sinon.spy(myEl, '_handleResponse');
           myEl.open();
+          myEl.toUserIds = ['RCPT_ID'];
           if(newApi) myEl.fromUserId = 'FAKE_CIS_ID';
           server.respondWith(
             'POST',
@@ -65,6 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var failurePost = function(done, url, newApi){
           var server = sinon.fakeServer.create();
           var handleError = sinon.spy(myEl, '_handleError');
+          myEl.toUserIds = ['RCPT_ID'];
           if(newApi) myEl.fromUserId = 'FAKE_CIS_ID';
           server.respondWith(
             'POST',

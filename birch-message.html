@@ -164,7 +164,7 @@ Example:
       _checkContentFilled: function(){
         this.debounce('content-filled-debouncer', function() {
           this.error = false;
-          this.$.sendButton.disabled = !(this.$.textarea.value.length > 0 && this.$.text.value.length > 0);
+          this.$.sendButton.disabled = this._hasContent();
         }, 300);
       },
       _clearText: function() {
@@ -228,6 +228,12 @@ Example:
         this._clearText();
         this.fire('birch-message-sent', e.detail);
       },
+      _hasContent: function(){
+        return !(this.$.textarea.value.length > 0 && this.$.text.value.length > 0);
+      },
+      _hasRequiredInfo: function(){
+        return this.toUserIds && this.toUserIds.length > 0 && this._hasContent(); // Has at least one userId.
+      },
       _postMessage: function() {
         this.$.sendButton.loading = true;
         this.$.sendButton.disabled = true;
@@ -238,7 +244,12 @@ Example:
           this._createOldBody();
           this.$.sendReq.url = this.ajaxBase + '/fst/mailbox/u2ms/api/v1/threads';
         }
-        this.$.sendReq.generateRequest();
+        if(this._hasRequiredInfo()) {
+          this.$.sendReq.generateRequest();
+        } else {
+          this.error = true;
+          this.fire('birch-message-error');
+        }
       }
 
     });
