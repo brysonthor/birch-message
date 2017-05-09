@@ -71,7 +71,6 @@ Example:
             <p class="char-count">[[_charactersLeft]]</p>
           </div>
           <div id="error-section" hidden="[[!error]]">
-            <span>[[i18n('error')]]</span>
             <cedar-alert alert-type="error">[[i18n('error')]]</cedar-alert>
           </div>
         </div>
@@ -164,7 +163,7 @@ Example:
       _checkContentFilled: function(){
         this.debounce('content-filled-debouncer', function() {
           this.error = false;
-          this.$.sendButton.disabled = this._hasContent();
+          this.$.sendButton.disabled = !(this._hasContent());
         }, 300);
       },
       _clearText: function() {
@@ -191,7 +190,7 @@ Example:
       _createBody: function() {
         this._body = {
           subject: this.$.text.value,
-          participantIds: this.toUserIds,
+          participantIds: this.toUserIds.concat([this.fromUserId]),
           firstMessage: {
             authorId: this.fromUserId,
             body: this.$.textarea.value
@@ -229,7 +228,7 @@ Example:
         this.fire('birch-message-sent', e.detail);
       },
       _hasContent: function(){
-        return !(this.$.textarea.value.length > 0 && this.$.text.value.length > 0);
+        return this.$.textarea.value.length > 0 && this.$.text.value.length > 0;
       },
       _hasRequiredInfo: function(){
         return this.toUserIds && this.toUserIds.length > 0 && this._hasContent(); // Has at least one userId.
@@ -249,6 +248,8 @@ Example:
         } else {
           this.error = true;
           this.fire('birch-message-error');
+          this.$.sendButton.loading = false;
+          this.$.sendButton.disabled = false;
         }
       }
 
