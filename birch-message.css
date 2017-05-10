@@ -75,3 +75,6 @@
   cursor: pointer;
   position: absolute;
 }
+#error-section {
+  margin-bottom: 12px;
+}
